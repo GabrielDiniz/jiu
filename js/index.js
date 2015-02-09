@@ -4,24 +4,24 @@ var filter_cats = new Array();
 	Faz uma varredura em todos os videos procurando 
 	por categorias presentes em videos que possuem 
 	todas as categorias passadas pro parâmetro
-**/
-function buscaCategoriasRelacionadas (filtro) {
-	var x=0,results = new Array();
-	
-	for(id in videos){
-		x=0
-		for(item in filtro){
-			if (videos[id].indexOf(parseInt(filtro[item]))>=0) {
-				x++;
-			};
+	**/
+	function buscaCategoriasRelacionadas (filtro) {
+		var x=0,results = new Array();
+
+		for(id in videos){
+			x=0
+			for(item in filtro){
+				if (videos[id].indexOf(parseInt(filtro[item]))>=0) {
+					x++;
+				};
+			}
+			if (x==filtro.length) {
+				results = results.concat(videos[id]);
+			}
 		}
-		if (x==filtro.length) {
-			results = results.concat(videos[id]);
-		}
-	}
-	results = results.filter(function(elem, pos, self) {
-		return self.indexOf(elem) == pos;
-	});
+		results = results.filter(function(elem, pos, self) {
+			return self.indexOf(elem) == pos;
+		});
 	// for(item in filtro){
 	// 	while (results.indexOf(parseInt(filtro[item])) !== -1) {
 	// 		results.splice(results.indexOf(parseInt(filtro[item])), 1);
@@ -107,30 +107,31 @@ function loadVideos(videos){
 	}
 }
 
-$.get('http://adx.doctum.edu.br/varios/json.php',function(data){
-	
-	categorias = data.categorias;
-	videos = data.videos;
-	inicio = data.inicio;
+$(function(){
+	$.ajax({
+		url:'http://adx.doctum.edu.br/varios/json.php',
+		method:'get',
+		dataType:'json',
+		success:function(data){
 
-	atual = inicio;
-	
+			categorias = data.categorias;
+			videos = data.videos;
+			inicio = data.inicio;
 
+			atual = inicio;
 
+			$('.conteudo').on('click','.categorias',function(){
+				filter_cats.push(parseInt($(this).attr('data-categoria-id')));
+				var a = buscaCategoriasRelacionadas(filter_cats);
+				if (a == 'Fim') {
+					loadVideos(buscaVideos(filter_cats));
+				} else{
+					atual = a;
+					load(a);
+				};
+			});
+			load(inicio);
 
-	$(function(){
-		
-		$('.conteudo').on('click','.categorias',function(){
-			filter_cats.push(parseInt($(this).attr('data-categoria-id')));
-			var a = buscaCategoriasRelacionadas(filter_cats);
-			if (a == 'Fim') {
-				loadVideos(buscaVideos(filter_cats));
-			} else{
-				atual = a;
-				load(a);
-			};
-		});
-		load(inicio);
-
+		}
 	});
 });
