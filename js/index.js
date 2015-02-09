@@ -133,8 +133,10 @@ $(function(){
 			load(inicio);
 
 		},
-		error:function(error) {
+		error:function(error,status,msg) {
 			alert(error);
+			alert(status);
+			alert(msg);
 		}
 	});
 });
