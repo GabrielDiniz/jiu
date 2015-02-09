@@ -113,7 +113,7 @@ $(function(){
 		method:'get',
 		dataType:'json',
 		success:function(data){
-
+            alert(data.categorias["1"]);
 			categorias = data.categorias;
 			videos = data.videos;
 			inicio = data.inicio;
@@ -132,6 +132,9 @@ $(function(){
 			});
 			load(inicio);
 
+		},
+		error:function(error) {
+			alert(error);
 		}
 	});
 });
