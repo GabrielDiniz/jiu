@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.selecaobrasileira.news"
+
+    versionCode = "1" 
+    version     = "1.0.0" 
+>
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Jiu Jitsu Explorer</name>
+    <icon src="icon.png"/>
+    <description>
+        Explore todas as possibilidades do jiu jitsu atraves de incríveis vídeo-aulas selecionadas para você.
+    </description>
+    <!-- <gap:platform name="ios" /> -->
+    <gap:platform name="android" />
+    <!-- <gap:platform name="winphone" /> -->
+    <author href="gabrieldiniz.com" email="contato@gabrieldiniz.com">
+        Gabriel Diniz 
+    </author>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.InAppBrowser" />
+    </feature>
+    <feature name="App">
+        <param name="android-package" value="org.apache.cordova.App" />
+    </feature>
+
+    <preference name="target-device" value="universal" />
+    <preference name="stay-in-webview" value="true"/>
+    <preference name="keepRunning" value="true" />
+    <access origin="*" subdomains="true" browserOnly="true" />
+    
+</widget>
