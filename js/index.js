@@ -1,11 +1,12 @@
 var categorias,videos,inicio,atual;
 var filter_cats = new Array();
+var navegacao = new Array();
 /**
 	Faz uma varredura em todos os videos procurando 
 	por categorias presentes em videos que possuem 
 	todas as categorias passadas pro parâmetro
 	**/
-	function buscaCategoriasRelacionadas (filtro) {
+	function buscaCategoriasRelacionadas (filtro,navegacao) {
 		var x=0,results = new Array();
 
 		for(id in videos){
@@ -27,7 +28,7 @@ var filter_cats = new Array();
 	// 		results.splice(results.indexOf(parseInt(filtro[item])), 1);
 	// 	}
 	// }
-	if (results.sort().toString() === atual.sort().toString()) {
+	if (results.sort().toString() === atual.sort().toString() && !navegacao) {
 		return 'Fim';
 	} else{
 		return results;
@@ -106,8 +107,25 @@ function loadVideos(videos){
 		});
 	}
 }
+function loadCategorias (navegacao) {
+	var a = buscaCategoriasRelacionadas(filter_cats,navegacao);
+	if (a == 'Fim' && !navegacao) {
+		loadVideos(buscaVideos(filter_cats));
+	} else{
+		atual = a;
+		load(a);
+	};
+	navegacao = new Array();
+	navegacao.push("<a href='index.html'>Início</a>");
+	for(x in filter_cats){
+		navegacao.push("<a href='#' class='navegacao-item' data-categoria-id='"+filter_cats[x]+"'>"+categorias[filter_cats[x]]+"</a>");
+	}
+	$('#navegacao').html(navegacao.join(' > '));
+	$('.navegacao').show();
+}
 
 $(function(){
+	$.ajaxSetup({headers: {"Pragma": "no-cache","Cache-Control": "no-cache"}});
 	$.ajax({
 		url:'http://adx.doctum.edu.br/varios/json.php',
 		method:'get',
@@ -122,19 +140,18 @@ $(function(){
 
 			$('.conteudo').on('click','.categorias',function(){
 				filter_cats.push(parseInt($(this).attr('data-categoria-id')));
-				var a = buscaCategoriasRelacionadas(filter_cats);
-				if (a == 'Fim') {
-					loadVideos(buscaVideos(filter_cats));
-				} else{
-					atual = a;
-					load(a);
-				};
+				loadCategorias();
+			});
+			$('.navegacao').on('click','.navegacao-item',function() {
+				filter_cats.splice(filter_cats.indexOf(parseInt($(this).attr('data-categoria-id')))+1);
+				loadCategorias(true);
 			});
 			load(inicio);
 
 		},
 		error:function(error,status,msg) {
-		//	alert(msg);
+			console.log(error.responseText);
 		}
 	});
+
 });
