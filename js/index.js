@@ -127,7 +127,7 @@ function loadCategorias (navegacao) {
 $(function(){
 	$.ajaxSetup({headers: {"Pragma": "no-cache","Cache-Control": "no-cache"}});
 	$.ajax({
-		url:'json.php',
+		url:'http://adx.doctum.edu.br/varios/json.php',
 		method:'get',
 		dataType:'json',
 		success:function(data){
@@ -146,12 +146,6 @@ $(function(){
 				filter_cats.splice(filter_cats.indexOf(($(this).attr('data-categoria-id')))+1);
 				loadCategorias(true);
 			});
-			// $('.navegacao').on('click','#navegacao-inicio',function() {
-			// 	filter_cats = new Array();
-			// 	atual = dados.inicio;
-			// 	load(dados.inicio);
-			// 	$('.navegacao').hide();
-			// });
 			load(inicio);
 
 		},
