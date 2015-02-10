@@ -1,4 +1,4 @@
-var categorias,videos,inicio,atual;
+var categorias,videos,inicio,atual,dados;
 var filter_cats = new Array();
 var navegacao = new Array();
 /**
@@ -12,7 +12,7 @@ var navegacao = new Array();
 		for(id in videos){
 			x=0
 			for(item in filtro){
-				if (videos[id].indexOf(parseInt(filtro[item]))>=0) {
+				if (videos[id].indexOf((filtro[item]))>=0) {
 					x++;
 				};
 			}
@@ -24,8 +24,8 @@ var navegacao = new Array();
 			return self.indexOf(elem) == pos;
 		});
 	// for(item in filtro){
-	// 	while (results.indexOf(parseInt(filtro[item])) !== -1) {
-	// 		results.splice(results.indexOf(parseInt(filtro[item])), 1);
+	// 	while (results.indexOf((filtro[item])) !== -1) {
+	// 		results.splice(results.indexOf((filtro[item])), 1);
 	// 	}
 	// }
 	if (results.sort().toString() === atual.sort().toString() && !navegacao) {
@@ -44,7 +44,7 @@ function buscaVideos(categorias){
 	for(id in videos){
 		x=0
 		for(item in categorias){
-			if (videos[id].indexOf(parseInt(categorias[item]))>=0) {
+			if (videos[id].indexOf((categorias[item]))>=0) {
 				x++;
 			};
 		}
@@ -116,7 +116,7 @@ function loadCategorias (navegacao) {
 		load(a);
 	};
 	navegacao = new Array();
-	navegacao.push("<a href='index.html'>Início</a>");
+	navegacao.push("<a href='index.html' id='navegacao-inicio'>Início</a>");
 	for(x in filter_cats){
 		navegacao.push("<a href='#' class='navegacao-item' data-categoria-id='"+filter_cats[x]+"'>"+categorias[filter_cats[x]]+"</a>");
 	}
@@ -127,11 +127,11 @@ function loadCategorias (navegacao) {
 $(function(){
 	$.ajaxSetup({headers: {"Pragma": "no-cache","Cache-Control": "no-cache"}});
 	$.ajax({
-		url:'http://adx.doctum.edu.br/varios/json.php',
+		url:'json.php',
 		method:'get',
 		dataType:'json',
 		success:function(data){
-        //    alert(data.categorias["1"]);
+        	dados = data;
 			categorias = data.categorias;
 			videos = data.videos;
 			inicio = data.inicio;
@@ -139,13 +139,19 @@ $(function(){
 			atual = inicio;
 
 			$('.conteudo').on('click','.categorias',function(){
-				filter_cats.push(parseInt($(this).attr('data-categoria-id')));
+				filter_cats.push(($(this).attr('data-categoria-id')));
 				loadCategorias();
 			});
 			$('.navegacao').on('click','.navegacao-item',function() {
-				filter_cats.splice(filter_cats.indexOf(parseInt($(this).attr('data-categoria-id')))+1);
+				filter_cats.splice(filter_cats.indexOf(($(this).attr('data-categoria-id')))+1);
 				loadCategorias(true);
 			});
+			// $('.navegacao').on('click','#navegacao-inicio',function() {
+			// 	filter_cats = new Array();
+			// 	atual = dados.inicio;
+			// 	load(dados.inicio);
+			// 	$('.navegacao').hide();
+			// });
 			load(inicio);
 
 		},
