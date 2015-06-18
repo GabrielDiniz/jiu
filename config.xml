@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.jiujitsu.explorer"
 
-    versionCode = "4" 
+    versionCode = "1" 
     version     = "1.0.0" 
 >
 
