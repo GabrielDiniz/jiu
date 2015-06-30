@@ -27,7 +27,7 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
-
+    <!-- <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.4.0" /> -->
     <preference name="target-device" value="universal" />
     <preference name="stay-in-webview" value="true"/>
     <preference name="keepRunning" value="true" />

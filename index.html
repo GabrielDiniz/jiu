@@ -5,7 +5,7 @@
  	<meta content="user-scalable=no,initial-scale = 1.0,maximum-scale = 1.0" name="viewport"/>
  	<!--Import materialize.css-->
  	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+ 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
  	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
  	<script type="text/javascript" src="js/materialize.min.js"></script>
  	<script type="text/javascript" src="js/index.js"></script>
@@ -20,25 +20,7 @@
  		$(function(){
  			$(".button-collapse").sideNav();
  		});
- 		$(function() {
 
- 			document.addEventListener("deviceready", function() {
- 				document.addEventListener("backbutton", function() {
- 					if (filter_cats.length === 1) {
- 						filter_cats = new Array();
- 						load(inicio);
- 						$('.navegacao').hide();
- 					}else if(filter_cats.length === 0){
- 						navigator.app.exitApp();
- 					}
-
- 					filter_cats.splice(-1);
- 					loadCategorias(true);
- 					return false;
- 				}, false);
-
- 			}, false);
- 		});
  	</script>
  	<style type="text/css">
  		nav .brand-logo{
@@ -84,5 +66,9 @@
  	<div class="row navegacao"><div class="col s12 white" ><div class="card-panel navegacao" id="navegacao"></div></div>
  </div>
  <div class="conteudo"></div>
+ <!-- <div class="row">
+ 	<a class="waves-effect waves-light btn" onclick="handleBackButtom()"><i class="material-icons left"></i>Voltar</a>
+ </div> -->
 </body>
+
 </html>

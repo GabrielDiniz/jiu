@@ -1,6 +1,10 @@
 var categorias,videos,inicio,atual,dados;
 var filter_cats = new Array();
 var navegacao = new Array();
+
+
+
+
 /**
 	Faz uma varredura em todos os videos procurando 
 	por categorias presentes em videos que possuem 
@@ -124,14 +128,39 @@ function loadCategorias (navegacao) {
 	$('.navegacao').show();
 }
 
+function handleBackButtom() {
+	if (filter_cats.length === 1) {
+		filter_cats = new Array();
+		$('.navegacao').hide();
+		load(inicio);
+	}else if(filter_cats.length === 0){
+		navigator.app.exitApp();
+	}else{
+		filter_cats.splice(-1);
+		loadCategorias(true);
+		return false;
+	}
+}
+
 $(function(){
+	
+	
+
+	document.addEventListener("deviceready", function() {
+		document.addEventListener("backbutton", function() {
+
+			handleBackButtom();
+
+		}, false);
+	}, false);
+
 	$.ajaxSetup({headers: {"Pragma": "no-cache","Cache-Control": "no-cache"}});
 	$.ajax({
 		url:'http://adx.doctum.edu.br/varios/json.php',
 		method:'get',
 		dataType:'json',
 		success:function(data){
-        	dados = data;
+			dados = data;
 			categorias = data.categorias;
 			videos = data.videos;
 			inicio = data.inicio;
