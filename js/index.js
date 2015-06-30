@@ -136,7 +136,7 @@ $(function(){
 			videos = data.videos;
 			inicio = data.inicio;
 
-			atual = inicio;
+			atual = $.extend([],inicio);
 
 			$('.conteudo').on('click','.categorias',function(){
 				filter_cats.push(($(this).attr('data-categoria-id')));

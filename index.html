@@ -24,7 +24,15 @@
 
  			document.addEventListener("deviceready", function() {
  				document.addEventListener("backbutton", function() {
- 					filter_cats.splice(1);
+ 					if (filter_cats.length === 1) {
+ 						filter_cats = new Array();
+ 						load(inicio);
+ 						$('.navegacao').hide();
+ 					}else if(filter_cats.length === 0){
+ 						navigator.app.exitApp();
+ 					}
+
+ 					filter_cats.splice(-1);
  					loadCategorias(true);
  					return false;
  				}, false);
