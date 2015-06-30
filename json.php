@@ -18,7 +18,7 @@ while($row = mysql_fetch_row($result)){
 }
 
 $result = mysql_query("set names 'utf8'"); 
-$query = "SELECT * from videos";
+$query = "SELECT * from videos order by hora DESC";
 
 $result = mysql_query($query)or die(mysql_error()); 
 
@@ -27,5 +27,5 @@ $videos=array();
 while($row = mysql_fetch_row($result)){
 	$videos[$row[0]] = explode(',', $row[1]);
 }
-
+$videos = array_reverse($videos,TRUE);
 echo json_encode(array('categorias'=>$cats,'videos'=>$videos,'inicio'=>array(6,4,9,12,8,7,5,31,14,34)));

@@ -8,7 +8,7 @@ mysql_select_db('jiu', $db) or die(mysql_error());
 
 $result = mysql_query("set names 'utf8'"); 
 $cats = implode(',', $_POST['cats']);
-$query = "insert into videos values ('{$_POST['id']}','$cats')";
+$query = "insert into videos values ('{$_POST['id']}','$cats',NOW())";
 
 $result = mysql_query($query)or die(mysql_error()); 
 
